@@ -7,7 +7,6 @@ public class MonoDemo {
     public static void main(String[] args) {
         MonoDemo main = new MonoDemo();
         //main.testMono();
-        //main.testMap();
         //main.testBlockingMono();
         //main.testNonBlockingMono();
         //main.fromCallableVsJust();
@@ -54,7 +53,8 @@ public class MonoDemo {
     }
 
     /*
-    Here third getName will not be blocked as second getName is consuming in other Thread.
+    Here third getName will not be blocked as second getName is consuming in other Thread
+    we need to add sleep at the end as main thread will exit before child thread is done with complete consumption.
      */
     private void testNonBlockingMono() {
         getName();
@@ -63,11 +63,6 @@ public class MonoDemo {
             .subscribe(s -> System.out.println(s));
         getName();
         sleepUtil(3000);
-    }
-
-    private void testMap() {
-        Mono<Integer> publisher = Mono.just(1).map(i -> i * 2);
-        publisher.subscribe(i -> System.out.println(i));
     }
 
     private Mono<String> getName() {
